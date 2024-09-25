@@ -31,7 +31,7 @@ public class Plato {
     @OneToMany(mappedBy = "plato")
     private Set<PlatoPedido> platoPedidos = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "idPlato")
+    @OneToMany(mappedBy = "plato")
     private Set<TipoPlato> tipoPlatos = new LinkedHashSet<>();
 
 }

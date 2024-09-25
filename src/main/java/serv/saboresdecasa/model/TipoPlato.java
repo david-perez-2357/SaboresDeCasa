@@ -23,7 +23,7 @@ public class TipoPlato {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plato")
-    private Plato idPlato;
+    private Plato plato;
 
     @Column(name = "tipo", nullable = false)
     @Enumerated(EnumType.ORDINAL)
