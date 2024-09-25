@@ -17,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class TipoPlato {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
