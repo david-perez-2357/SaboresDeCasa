@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "promocion", schema = "SaboresDeCasa")
+@Table(name = "promocion", schema = "saboresdecasa")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -7,7 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "plato_pedido", schema = "SaboresDeCasa")
+@Table(name = "plato_pedido", schema = "saboresdecasa")
 @Getter
 @Setter
 @NoArgsConstructor
