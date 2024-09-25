@@ -1,5 +1,5 @@
 package serv.saboresdecasa.enumerator;
 
-public enum TipoPlatoEnum {
+public enum TiposPlato {
     TAPA, PRINCIPAL, POSTRE
 }

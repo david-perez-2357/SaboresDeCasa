@@ -2,7 +2,7 @@ package serv.saboresdecasa.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import serv.saboresdecasa.enumerator.TipoPlatoEnum;
+import serv.saboresdecasa.enumerator.TiposPlato;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
@@ -27,7 +27,7 @@ public class TipoPlato {
 
     @Column(name = "tipo", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private TipoPlatoEnum tipo;
+    private TiposPlato tipo;
 
     @Column(name = "precio", nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
