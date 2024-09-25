@@ -28,7 +28,7 @@ public class Cliente {
     @Column(name = "telefono", length = 9)
     private String telefono;
 
-    @OneToMany(mappedBy = "idCliente")
+    @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos = new LinkedHashSet<>();
 
 }

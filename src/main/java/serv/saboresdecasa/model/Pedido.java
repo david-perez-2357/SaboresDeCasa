@@ -23,11 +23,11 @@ public class Pedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
-    private Cliente idCliente;
+    private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_mesa", nullable = false)
-    private Mesa idMesa;
+    private Mesa mesa;
 
     @ColumnDefault("CURRENT_DATE")
     @Column(name = "fecha", nullable = false)
@@ -35,12 +35,11 @@ public class Pedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_promocion")
-    private Promocion idPromocion;
+    private Promocion promocion;
 
-    @OneToMany(mappedBy = "idPedido")
+    @OneToMany(mappedBy = "pedido")
     private Set<BebidaPedido> bebidaPedidos = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "idPedido")
+    @OneToMany(mappedBy = "pedido")
     private Set<PlatoPedido> platoPedidos = new LinkedHashSet<>();
-
 }

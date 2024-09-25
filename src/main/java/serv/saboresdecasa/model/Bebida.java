@@ -25,6 +25,6 @@ public class Bebida {
     @Column(name = "ml_de_capacidad", nullable = false)
     private Integer mlDeCapacidad;
 
-    @OneToMany(mappedBy = "idBebida")
+    @OneToMany(mappedBy = "bebida")
     private Set<BebidaPedido> bebidaPedidos = new LinkedHashSet<>();
 }

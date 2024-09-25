@@ -28,7 +28,7 @@ public class Plato {
             inverseJoinColumns = @JoinColumn(name = "id_ingrediente"))
     private Set<Ingrediente> ingredientes = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "idPlato")
+    @OneToMany(mappedBy = "plato")
     private Set<PlatoPedido> platoPedidos = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idPlato")

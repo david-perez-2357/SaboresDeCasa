@@ -28,7 +28,7 @@ public class Promocion {
     @Column(name = "porcentaje_descuento", nullable = false)
     private Short porcentajeDescuento;
 
-    @OneToMany(mappedBy = "idPromocion")
+    @OneToMany(mappedBy = "promocion")
     private Set<Pedido> pedidos = new LinkedHashSet<>();
 
 }

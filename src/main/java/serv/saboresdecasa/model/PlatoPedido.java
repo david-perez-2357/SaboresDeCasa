@@ -21,15 +21,15 @@ public class PlatoPedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plato")
-    private Plato idPlato;
+    private Plato plato;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido")
-    private Pedido idPedido;
+    private Pedido pedido;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_tipo_plato", nullable = false)
-    private TipoPlato idTipoPlato;
+    private TipoPlato tipoPlato;
 
     @ColumnDefault("1")
     @Column(name = "cantidad", nullable = false)

@@ -23,7 +23,6 @@ public class Mesa {
     @Column(name = "capacidad", nullable = false)
     private Short capacidad;
 
-    @OneToMany(mappedBy = "idMesa")
+    @OneToMany(mappedBy = "mesa")
     private Set<Pedido> pedidos = new LinkedHashSet<>();
-
 }

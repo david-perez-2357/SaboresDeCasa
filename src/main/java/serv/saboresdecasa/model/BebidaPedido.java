@@ -21,11 +21,11 @@ public class BebidaPedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_bebida")
-    private Bebida idBebida;
+    private Bebida bebida;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_pedido", nullable = false)
-    private Pedido idPedido;
+    private Pedido pedido;
 
     @ColumnDefault("1")
     @Column(name = "cantidad", nullable = false)
