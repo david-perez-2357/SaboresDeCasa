@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PlatoRepository extends JpaRepository<Plato, Integer> {
-    List<Plato> findPlatoByNombreContaining(String nombre);
+    List<Plato> findAllByNombreContaining(String nombre);
 }

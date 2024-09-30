@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface BebidaPedidoRepository extends JpaRepository<BebidaPedido, Integer> {
-    List<BebidaPedido> findByPedido(Pedido pedido);
-    List<BebidaPedido> findByBebida(Bebida bebida);
+    List<BebidaPedido> findAllByPedido(Pedido pedido);
+    List<BebidaPedido> findAllByBebida(Bebida bebida);
 }

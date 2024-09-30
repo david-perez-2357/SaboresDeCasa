@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MesaRepository extends JpaRepository<Mesa, Integer> {
-    List<Mesa> findMesaByCapacidadEquals(Short capacidad);
+    List<Mesa> findAllByCapacidadEquals(Short capacidad);
 }

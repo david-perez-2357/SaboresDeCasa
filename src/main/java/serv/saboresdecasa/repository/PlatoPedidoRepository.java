@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface PlatoPedidoRepository extends JpaRepository<PlatoPedido, Integer> {
-    List<PlatoPedido> findByPedido(Pedido pedido);
+    List<PlatoPedido> findAllByPedido(Pedido pedido);
     List<PlatoPedido> findByPlato(Plato plato);
 }

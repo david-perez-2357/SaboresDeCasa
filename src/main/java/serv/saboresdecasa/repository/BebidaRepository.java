@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BebidaRepository extends JpaRepository<Bebida, Integer> {
-    List<Bebida> findBebidaByNombreContaining(String nombre);
+    List<Bebida> findAllByNombreContaining(String nombre);
 }
