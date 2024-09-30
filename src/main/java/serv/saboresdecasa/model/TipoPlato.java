@@ -13,8 +13,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
+@ToString(exclude = {"plato", "platoPedidos"})
+@EqualsAndHashCode(exclude = {"plato", "platoPedidos"})
 public class TipoPlato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

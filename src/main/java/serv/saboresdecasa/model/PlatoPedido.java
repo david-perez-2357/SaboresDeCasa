@@ -11,8 +11,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
+@ToString(exclude = {"plato", "pedido"})
+@EqualsAndHashCode(exclude = {"plato", "pedido"})
 public class PlatoPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

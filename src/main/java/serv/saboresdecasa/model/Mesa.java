@@ -12,8 +12,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
+@ToString(exclude = "pedidos")
+@EqualsAndHashCode(exclude = "pedidos")
 public class Mesa {
     @Id
     @Column(name = "numero", nullable = false)

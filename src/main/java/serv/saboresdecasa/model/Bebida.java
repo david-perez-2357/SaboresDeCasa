@@ -11,8 +11,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
+@ToString(exclude = "bebidaPedidos")
+@EqualsAndHashCode(exclude = "bebidaPedidos")
 public class Bebida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,8 +11,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
+@ToString(exclude = {"bebida", "pedido"})
+@EqualsAndHashCode(exclude = {"bebida", "pedido"})
 public class BebidaPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +38,4 @@ public class BebidaPedido {
 
     @Column(name = "precio", nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
-
 }

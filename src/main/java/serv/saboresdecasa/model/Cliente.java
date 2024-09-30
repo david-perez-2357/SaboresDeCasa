@@ -11,8 +11,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @AllArgsConstructor
+@ToString(exclude = "pedidos")
+@EqualsAndHashCode(exclude = "pedidos")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +31,4 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos = new LinkedHashSet<>();
-
 }
