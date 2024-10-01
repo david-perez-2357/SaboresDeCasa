@@ -32,6 +32,10 @@ class SaboresDeCasaApplicationTests {
     private PromocionService promocionService;
     @Autowired
     private TipoPlatoService tipoPlatoService;
+    @Autowired
+    private BebidaPedidoService bebidaPedidoService;
+    @Autowired
+    private PlatoPedidoService platoPedidoService;
 
     @Test
     void contextLoads() {
@@ -113,6 +117,7 @@ class SaboresDeCasaApplicationTests {
         platoPedido.setPrecio(BigDecimal.valueOf(10.0));
         pedido.setPlatoPedidos(Set.of(platoPedido));
         pedidoService.save(pedido);
+        platoPedidoService.save(platoPedido);
         System.out.println("Added data to PlatoPedido table");
 
         BebidaPedido bebidaPedido = new BebidaPedido();
@@ -123,6 +128,7 @@ class SaboresDeCasaApplicationTests {
         bebidaPedido.setPrecio(BigDecimal.valueOf(5.0));
         pedido.setBebidaPedidos(Set.of(bebidaPedido));
         pedidoService.save(pedido);
+        bebidaPedidoService.save(bebidaPedido);
         System.out.println("Added data to BebidaPedido table");
     }
 }
