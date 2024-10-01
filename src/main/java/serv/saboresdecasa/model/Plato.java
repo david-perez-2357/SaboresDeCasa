@@ -26,6 +26,7 @@ public class Plato {
     @ManyToMany
     @JoinTable(name = "plato_ingrediente",
             joinColumns = @JoinColumn(name = "id_plato"),
+            schema = "saboresdecasa",
             inverseJoinColumns = @JoinColumn(name = "id_ingrediente"))
     private Set<Ingrediente> ingredientes = new LinkedHashSet<>();
 
