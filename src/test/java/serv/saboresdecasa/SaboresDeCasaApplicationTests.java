@@ -131,4 +131,111 @@ class SaboresDeCasaApplicationTests {
         bebidaPedidoService.save(bebidaPedido);
         System.out.println("Added data to BebidaPedido table");
     }
+
+    @Test
+    void deleteDataFromAllTables() {
+        System.out.println("Deleting data from all tables...");
+        bebidaPedidoService.delete(1);
+        System.out.println("Deleted data from BebidaPedido table");
+
+        platoPedidoService.delete(1);
+        System.out.println("Deleted data from PlatoPedido table");
+
+        pedidoService.delete(1);
+        System.out.println("Deleted data from Pedido table");
+
+        promocionService.delete(1);
+        System.out.println("Deleted data from Promocion table");
+
+        mesaService.delete(1);
+        System.out.println("Deleted data from Mesa table");
+
+        clienteService.delete(1);
+        System.out.println("Deleted data from Cliente table");
+
+        tipoPlatoService.delete(1);
+        System.out.println("Deleted data from TipoPlato table");
+
+        platoService.delete(1);
+        System.out.println("Deleted data from Plato table");
+
+        ingredienteService.delete(1);
+        System.out.println("Deleted data from Ingrediente table");
+
+        ingredienteService.delete(2);
+        System.out.println("Deleted data from Ingrediente table");
+
+        bebidaService.delete(1);
+        System.out.println("Deleted data from Bebida table");
+
+        System.out.println("Deleted data from all tables");
+    }
+
+    @Test
+    void getAllDataFromAllTables() {
+        System.out.println("Getting all data from all tables...");
+        List<Bebida> bebidas = bebidaService.getAll();
+        System.out.println("Bebidas: " + bebidas);
+
+        List<Cliente> clientes = clienteService.getAll();
+        System.out.println("Clientes: " + clientes);
+
+        List<Ingrediente> ingredientes = ingredienteService.getAll();
+        System.out.println("Ingredientes: " + ingredientes);
+
+        List<Mesa> mesas = mesaService.getAll();
+        System.out.println("Mesas: " + mesas);
+
+        List<Pedido> pedidos = pedidoService.getAll();
+        System.out.println("Pedidos: " + pedidos);
+
+        List<Plato> platos = platoService.getAll();
+        System.out.println("Platos: " + platos);
+
+        List<Promocion> promociones = promocionService.getAll();
+        System.out.println("Promociones: " + promociones);
+
+        List<TipoPlato> tiposPlato = tipoPlatoService.getAll();
+        System.out.println("TiposPlato: " + tiposPlato);
+
+        List<BebidaPedido> bebidaPedidos = bebidaPedidoService.getAll();
+        System.out.println("BebidaPedidos: " + bebidaPedidos);
+
+        List<PlatoPedido> platoPedidos = platoPedidoService.getAll();
+        System.out.println("PlatoPedidos: " + platoPedidos);
+    }
+
+    @Test
+    void getOneDataFromAllTables() {
+        System.out.println("Getting one data from all tables...");
+        Bebida bebida = bebidaService.findById(1);
+        System.out.println("Bebida: " + bebida);
+
+        Cliente cliente = clienteService.findById(1);
+        System.out.println("Cliente: " + cliente);
+
+        Ingrediente ingrediente = ingredienteService.findById(1);
+        System.out.println("Ingrediente: " + ingrediente);
+
+        Mesa mesa = mesaService.findById(1);
+        System.out.println("Mesa: " + mesa);
+
+        Pedido pedido = pedidoService.findById(1);
+        System.out.println("Pedido: " + pedido);
+
+        Plato plato = platoService.findById(1);
+        System.out.println("Plato: " + plato);
+
+        Promocion promocion = promocionService.findById(1);
+        System.out.println("Promocion: " + promocion);
+
+        TipoPlato tipoPlato = tipoPlatoService.findById(1);
+        System.out.println("TipoPlato: " + tipoPlato);
+
+        BebidaPedido bebidaPedido = bebidaPedidoService.findById(1);
+        System.out.println("BebidaPedido: " + bebidaPedido);
+
+        PlatoPedido platoPedido = platoPedidoService.findById(1);
+        System.out.println("PlatoPedido: " + platoPedido);
+    }
 }
