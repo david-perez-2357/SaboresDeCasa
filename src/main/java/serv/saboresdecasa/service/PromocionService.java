@@ -35,7 +35,7 @@ public class PromocionService {
      * @param id Integer
      * @return Promocion
      */
-    public Promocion getById(Integer id) {
+    public Promocion findById(Integer id) {
         return promocionRepository.findById(id).orElse(null);
     }
 

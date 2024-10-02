@@ -35,7 +35,7 @@ public class TipoPlatoService {
      * @param id Integer
      * @return TipoPlato
      */
-    public TipoPlato getById(Integer id) {
+    public TipoPlato findById(Integer id) {
         return tipoPlatoRepository.findById(id).orElse(null);
     }
 
