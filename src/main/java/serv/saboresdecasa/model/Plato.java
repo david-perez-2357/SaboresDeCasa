@@ -12,8 +12,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"ingredientes", "platoPedidos", "tipoPlatos"})
-@EqualsAndHashCode(exclude = {"ingredientes", "platoPedidos", "tipoPlatos"})
+@ToString(exclude = {"ingredientes", "tipoPlatos"})
+@EqualsAndHashCode(exclude = {"ingredientes", "tipoPlatos"})
 public class Plato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +31,5 @@ public class Plato {
     private Set<Ingrediente> ingredientes = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "plato")
-    private Set<PlatoPedido> platoPedidos = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "plato")
     private Set<TipoPlato> tipoPlatos = new LinkedHashSet<>();
-
 }

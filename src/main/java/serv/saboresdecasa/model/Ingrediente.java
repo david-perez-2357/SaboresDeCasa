@@ -12,8 +12,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "platos")
-@EqualsAndHashCode(exclude = "platos")
 public class Ingrediente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +20,4 @@ public class Ingrediente {
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
-
-    @ManyToMany(mappedBy = "ingredientes")
-    private Set<Plato> platos = new LinkedHashSet<>();
 }

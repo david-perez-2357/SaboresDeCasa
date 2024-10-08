@@ -35,5 +35,4 @@ public class TipoPlato {
 
     @OneToMany(mappedBy = "tipoPlato")
     private Set<PlatoPedido> platoPedidos = new LinkedHashSet<>();
-
 }

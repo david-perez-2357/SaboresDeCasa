@@ -42,5 +42,4 @@ public class PlatoPedido {
 
     @Column(name = "precio", nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
-
 }
