@@ -13,7 +13,7 @@ import java.util.List;
 public class BebidaController {
     private BebidaService bebidaService;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Bebida> getAll() {
         return bebidaService.getAll();
     }
