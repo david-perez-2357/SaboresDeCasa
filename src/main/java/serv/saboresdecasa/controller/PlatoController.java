@@ -1,7 +1,6 @@
-package serv.saboresdecasa.controler;
+package serv.saboresdecasa.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/plato")
-public class PlatoControler {
+public class PlatoController {
     private PlatoService platoService;
 
     @GetMapping("/all")
