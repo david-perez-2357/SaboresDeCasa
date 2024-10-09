@@ -1,8 +1,9 @@
 package serv.saboresdecasa.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import serv.saboresdecasa.dto.PlatoDTO;
+import serv.saboresdecasa.model.Ingrediente;
 import serv.saboresdecasa.model.Plato;
 import serv.saboresdecasa.repository.PlatoRepository;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class PlatoService {
+    private final IngredienteService ingredienteService;
     private PlatoRepository platoRepository;
 
     /**
@@ -24,9 +26,19 @@ public class PlatoService {
     /**
      * Find a dish by id
      * @param idPlato Integer
+     * @return PlatoDTO
+     */
+    public PlatoDTO findById(Integer idPlato) {
+        Plato plato = platoRepository.findById(idPlato).orElse(null);
+        return new PlatoDTO(plato);
+    }
+
+    /**
+     * Find a dish by id
+     * @param idPlato Integer
      * @return Plato
      */
-    public Plato findById(Integer idPlato) {
+    public Plato findPlatoById(Integer idPlato) {
         return platoRepository.findById(idPlato).orElse(null);
     }
 
@@ -35,15 +47,63 @@ public class PlatoService {
      * @param plato Plato
      * @return Plato
      */
-    public Plato save(Plato plato) {
-        return platoRepository.save(plato);
+    public PlatoDTO save(Plato plato) {
+        Plato platoSaved = platoRepository.save(plato);
+        return new PlatoDTO(platoSaved);
     }
 
     /**
      * Get all records
      * @return List<Plato>
      */
-    public List<Plato> getAll() {
-        return platoRepository.findAll();
+    public List<PlatoDTO> getAll() {
+        List<Plato> platos = platoRepository.findAll();
+        return platos.stream().map(PlatoDTO::new).toList();
+    }
+
+    /**
+     * Get all ingredients from a dish
+     * @param idPlato Integer
+     * @return List<Ingrediente>
+     */
+    public List<Ingrediente> getIngredientes(Integer idPlato) {
+        Plato plato = platoRepository.findById(idPlato).orElse(null);
+        if (plato == null) {
+            return null;
+        }
+        return plato.getIngredientes().stream().toList();
+    }
+
+    /**
+     * Add an ingredient to a dish
+     * @param idPlato Integer
+     * @param idIngrediente Integer
+     * @return PlatoDTO
+     */
+    public PlatoDTO addIngredient(Integer idPlato, Integer idIngrediente) {
+        Plato plato = findPlatoById(idPlato);
+        Ingrediente ingrediente = ingredienteService.findById(idIngrediente);
+        System.out.println((plato == null) + " " + (ingrediente == null));
+        if (plato == null || ingrediente == null) {
+            return null;
+        }
+        plato.getIngredientes().add(ingrediente);
+        return save(plato);
+    }
+
+    /**
+     * Delete an ingredient from a dish
+     * @param idPlato Integer
+     * @param idIngrediente Integer
+     * @return PlatoDTO
+     */
+    public PlatoDTO deleteIngredient(Integer idPlato, Integer idIngrediente) {
+        Plato plato = findPlatoById(idPlato);
+        Ingrediente ingrediente = ingredienteService.findById(idIngrediente);
+        if (plato == null || ingrediente == null) {
+            return null;
+        }
+        plato.getIngredientes().remove(ingrediente);
+        return save(plato);
     }
 }
