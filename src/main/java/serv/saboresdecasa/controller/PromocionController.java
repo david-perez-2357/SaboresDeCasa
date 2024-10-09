@@ -18,17 +18,17 @@ public class PromocionController {
         return promocionService.getAll();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public Promocion getById(@PathVariable Integer id) {
         return promocionService.findById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public Promocion add(@RequestBody Promocion promocion) {
         return promocionService.save(promocion);
     }
 
-    @PutMapping("/edit")
+    @PutMapping
     public Promocion save(@RequestBody Promocion promocion) {
         return promocionService.save(promocion);
     }
