@@ -3,10 +3,13 @@ package serv.saboresdecasa.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import serv.saboresdecasa.dto.PlatoDTO;
+import serv.saboresdecasa.mapper.PlatoMapper;
+import serv.saboresdecasa.mapper.PlatoMapperImpl;
 import serv.saboresdecasa.model.Ingrediente;
 import serv.saboresdecasa.model.Plato;
 import serv.saboresdecasa.repository.PlatoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,7 +61,10 @@ public class PlatoService {
      */
     public List<PlatoDTO> getAll() {
         List<Plato> platos = platoRepository.findAll();
-        return platos.stream().map(PlatoDTO::new).toList();
+        List<PlatoDTO> platoDTOS = new ArrayList<>();
+        PlatoMapper platoMapper = new PlatoMapperImpl();
+
+        return platoMapper.toDTOList(platos);
     }
 
     /**
@@ -81,6 +87,7 @@ public class PlatoService {
      * @return PlatoDTO
      */
     public PlatoDTO addIngredient(Integer idPlato, Integer idIngrediente) {
+        PlatoMapper platoMapper = new PlatoMapperImpl();
         Plato plato = findPlatoById(idPlato);
         Ingrediente ingrediente = ingredienteService.findById(idIngrediente);
         System.out.println((plato == null) + " " + (ingrediente == null));

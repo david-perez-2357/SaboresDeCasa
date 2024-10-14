@@ -27,7 +27,7 @@ public class PlatoController {
         return platoService.findById(id);
     }
 
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         platoService.delete(id);
     }
@@ -54,7 +54,7 @@ public class PlatoController {
         return platoService.addIngredient(idPlato, idIngrediente);
     }
 
-    @PostMapping("/{idPlato}/ingredient/{idIngrediente}")
+    @DeleteMapping("/{idPlato}/ingredient/{idIngrediente}")
     public PlatoDTO deleteIngredient(@PathVariable Integer idPlato, @PathVariable Integer idIngrediente) {
         return platoService.deleteIngredient(idPlato, idIngrediente);
     }
