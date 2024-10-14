@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import serv.saboresdecasa.dto.PedidoDTO;
 import serv.saboresdecasa.dto.PlatoDTO;
 import serv.saboresdecasa.dto.PlatoPedidoDTO;
+import serv.saboresdecasa.mapper.PlatoMapper;
+import serv.saboresdecasa.mapper.PlatoMapperImpl;
 import serv.saboresdecasa.model.Bebida;
 import serv.saboresdecasa.model.BebidaPedido;
 import serv.saboresdecasa.model.Pedido;
@@ -71,12 +73,13 @@ public class PedidoService {
      */
     public List<PlatoDTO> getPlatos(Integer idPedido) {
         Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
+        PlatoMapper platoMapper = new PlatoMapperImpl();
         if (pedido == null) {
             return null;
         }
 
         List<PlatoPedido> platos = pedido.getPlatoPedidos().stream().toList();
-        return platos.stream().map(PlatoPedido::getPlato).map(PlatoDTO::new).toList();
+        return platos.stream().map(PlatoPedido::getPlato).map(platoMapper::toDTO).toList();
     }
 
     /**
