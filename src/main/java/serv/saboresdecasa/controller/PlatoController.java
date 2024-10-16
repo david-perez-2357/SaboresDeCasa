@@ -3,10 +3,14 @@ package serv.saboresdecasa.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import serv.saboresdecasa.dto.PlatoDTO;
+import serv.saboresdecasa.dto.PlatoFormattedDTO;
+import serv.saboresdecasa.mapper.PlatoFormattedMapper;
+import serv.saboresdecasa.mapper.PlatoMapper;
 import serv.saboresdecasa.model.Ingrediente;
 import serv.saboresdecasa.model.Plato;
 import serv.saboresdecasa.service.IngredienteService;
 import serv.saboresdecasa.service.PlatoService;
+import serv.saboresdecasa.service.TipoPlatoService;
 
 import java.util.List;
 
@@ -16,6 +20,13 @@ import java.util.List;
 public class PlatoController {
     private PlatoService platoService;
     private IngredienteService ingredienteService;
+    private TipoPlatoService tipoPlatoService;
+    private PlatoFormattedMapper platoFormattedMapper;
+
+    @GetMapping("/format/{id}")
+    public List<PlatoFormattedDTO> getPlatosByTipo(@PathVariable Integer id) {
+        return platoFormattedMapper.toDTOList(tipoPlatoService.getByTipo(id));
+    }
 
     @GetMapping
     public List<PlatoDTO> getAll() {
@@ -34,13 +45,13 @@ public class PlatoController {
 
     @PostMapping
     public PlatoDTO save(@RequestBody PlatoDTO platoDTO) {
-        return platoService.save(platoDTO.convertToPlato());
+        return platoService.save(PlatoMapper.INSTANCE.toModel(platoDTO));
     }
 
     @PutMapping
     public PlatoDTO update(@RequestBody PlatoDTO platoDTO) {
         Plato originalPlato = platoService.findPlatoById(platoDTO.getId());
-        Plato finalPlato = platoDTO.convertToPlato(originalPlato);
+        Plato finalPlato = PlatoMapper.INSTANCE.toModel(platoDTO);
         return platoService.save(finalPlato);
     }
 

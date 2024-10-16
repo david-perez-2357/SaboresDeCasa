@@ -38,18 +38,19 @@ public class PedidoController {
         return pedidoService.save(pedido);
     }
 
-    @GetMapping("/{id}/platos")
-    public List<PlatoDTO> getPlatos(@PathVariable Integer id) {
+    @GetMapping("/{id}/plato")
+    public List<PlatoPedidoDTO> getPlatos(@PathVariable Integer id) {
         return pedidoService.getPlatos(id);
     }
 
-    @GetMapping("/{id}/bebidas")
+    @GetMapping("/{id}/bebida")
     public List<Bebida> getBebidas(@PathVariable Integer id) {
         return pedidoService.getBebidas(id);
     }
 
     @PostMapping("/{id}/plato")
     public PlatoPedidoDTO addPlato(@PathVariable Integer id, @RequestBody PlatoPedidoDTO plato) {
+        plato.setIdPedido(id);
         return pedidoService.addPlato(id, plato);
     }
 
