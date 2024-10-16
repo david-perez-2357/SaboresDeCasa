@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -32,7 +34,7 @@ public class Pedido {
 
     @ColumnDefault("CURRENT_DATE")
     @Column(name = "fecha", nullable = false)
-    private Instant fecha;
+    private LocalDateTime fecha;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_promocion")

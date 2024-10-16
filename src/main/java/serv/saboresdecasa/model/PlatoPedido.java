@@ -12,17 +12,13 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"plato", "pedido"})
-@EqualsAndHashCode(exclude = {"plato", "pedido"})
+@ToString(exclude = {"pedido"})
+@EqualsAndHashCode(exclude = {"pedido"})
 public class PlatoPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_plato")
-    private Plato plato;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido")
