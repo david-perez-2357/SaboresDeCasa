@@ -3,22 +3,25 @@ package serv.saboresdecasa.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import serv.saboresdecasa.dto.PedidoDTO;
-import serv.saboresdecasa.dto.PlatoDTO;
 import serv.saboresdecasa.dto.PlatoPedidoDTO;
-import serv.saboresdecasa.mapper.PlatoMapper;
-import serv.saboresdecasa.mapper.PlatoMapperImpl;
+import serv.saboresdecasa.mapper.PedidoMapper;
+import serv.saboresdecasa.mapper.PlatoPedidoMapper;
 import serv.saboresdecasa.model.Bebida;
 import serv.saboresdecasa.model.BebidaPedido;
 import serv.saboresdecasa.model.Pedido;
 import serv.saboresdecasa.model.PlatoPedido;
 import serv.saboresdecasa.repository.PedidoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class PedidoService {
     private PedidoRepository pedidoRepository;
+    private PedidoMapper pedidoMapper;
+    private PlatoPedidoMapper platoPedidoMapper;
+    private PlatoPedidoService platoPedidoService;
 
     /**
      * Delete order by id
@@ -35,7 +38,7 @@ public class PedidoService {
      */
     public PedidoDTO findById(Integer idPedido) {
         Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
-        return new PedidoDTO(pedido);
+        return pedidoMapper.toDTO(pedido);
     }
 
     /**
@@ -49,12 +52,14 @@ public class PedidoService {
 
     /**
      * Save an order, if it already exists, it updates it
-     * @param pedido Pedido
+     * @param pedidoDTO Pedido
      * @return Pedido
      */
-    public PedidoDTO save(PedidoDTO pedido) {
-        Pedido pedidoSaved = pedidoRepository.save(pedido.convertToPedido());
-        return new PedidoDTO(pedidoSaved);
+    public PedidoDTO save(PedidoDTO pedidoDTO) {
+        Pedido pedido = pedidoMapper.toModel(pedidoDTO);
+
+        Pedido pedidoSaved = pedidoRepository.save(pedido);
+        return pedidoMapper.toDTO(pedidoSaved);
     }
 
     /**
@@ -63,7 +68,7 @@ public class PedidoService {
      */
     public List<PedidoDTO> getAll() {
         List<Pedido> pedidos = pedidoRepository.findAll();
-        return pedidos.stream().map(PedidoDTO::new).toList();
+        return pedidos.stream().map(pedidoMapper::toDTO).toList();
     }
 
     /**
@@ -71,15 +76,14 @@ public class PedidoService {
      * @param idPedido Integer
      * @return List<String>
      */
-    public List<PlatoDTO> getPlatos(Integer idPedido) {
+    public List<PlatoPedidoDTO> getPlatos(Integer idPedido) {
         Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
-        PlatoMapper platoMapper = new PlatoMapperImpl();
         if (pedido == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         List<PlatoPedido> platos = pedido.getPlatoPedidos().stream().toList();
-        return platos.stream().map(PlatoPedido::getPlato).map(platoMapper::toDTO).toList();
+        return platoPedidoMapper.toDTOList(platos);
     }
 
     /**
@@ -100,16 +104,21 @@ public class PedidoService {
     /**
      * Add a dish to an order
      * @param idPedido Integer
-     * @param plato PlatoPedido
+     * @param platoPedidoDTO PlatoPedido
      */
-    public PlatoPedidoDTO addPlato(Integer idPedido, PlatoPedidoDTO plato) {
+    public PlatoPedidoDTO addPlato(Integer idPedido, PlatoPedidoDTO platoPedidoDTO) {
         Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
         if (pedido == null) {
             return null;
         }
+        PlatoPedido foundPlatoPedido = platoPedidoService.findById(platoPedidoDTO.getId());
+        PlatoPedido platoPedido = platoPedidoMapper.toModel(platoPedidoDTO);
 
-        PlatoPedido platoPedido = plato.convertToPlatoPedido();
+        if (foundPlatoPedido == null) {
+            platoPedido = platoPedidoService.save(platoPedido);
+        }
+
         pedido.getPlatoPedidos().add(platoPedido);
-        return new PlatoPedidoDTO(platoPedido);
+        return platoPedidoMapper.toDTO(platoPedido);
     }
 }

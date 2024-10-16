@@ -3,6 +3,7 @@ package serv.saboresdecasa.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import serv.saboresdecasa.enumerator.TiposPlato;
 import serv.saboresdecasa.model.TipoPlato;
 import serv.saboresdecasa.repository.TipoPlatoRepository;
 
@@ -45,5 +46,14 @@ public class TipoPlatoService {
      */
     public List<TipoPlato> getAll() {
         return tipoPlatoRepository.findAll();
+    }
+
+    /**
+     * Get all dishes by type id
+     * @param id Integer
+     * @return List<TipoPlato>
+     */
+    public List<TipoPlato> getByTipo(Integer id) {
+        return tipoPlatoRepository.findByTipo(TiposPlato.values()[id]);
     }
 }

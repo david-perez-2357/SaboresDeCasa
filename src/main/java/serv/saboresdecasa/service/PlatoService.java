@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import serv.saboresdecasa.dto.PlatoDTO;
 import serv.saboresdecasa.mapper.PlatoMapper;
-import serv.saboresdecasa.mapper.PlatoMapperImpl;
 import serv.saboresdecasa.model.Ingrediente;
 import serv.saboresdecasa.model.Plato;
 import serv.saboresdecasa.repository.PlatoRepository;
@@ -33,7 +32,7 @@ public class PlatoService {
      */
     public PlatoDTO findById(Integer idPlato) {
         Plato plato = platoRepository.findById(idPlato).orElse(null);
-        return new PlatoDTO(plato);
+        return PlatoMapper.INSTANCE.toDTO(plato);
     }
 
     /**
@@ -52,7 +51,7 @@ public class PlatoService {
      */
     public PlatoDTO save(Plato plato) {
         Plato platoSaved = platoRepository.save(plato);
-        return new PlatoDTO(platoSaved);
+        return PlatoMapper.INSTANCE.toDTO(platoSaved);
     }
 
     /**
@@ -62,9 +61,8 @@ public class PlatoService {
     public List<PlatoDTO> getAll() {
         List<Plato> platos = platoRepository.findAll();
         List<PlatoDTO> platoDTOS = new ArrayList<>();
-        PlatoMapper platoMapper = new PlatoMapperImpl();
 
-        return platoMapper.toDTOList(platos);
+        return PlatoMapper.INSTANCE.toDTOList(platos);
     }
 
     /**
@@ -87,7 +85,6 @@ public class PlatoService {
      * @return PlatoDTO
      */
     public PlatoDTO addIngredient(Integer idPlato, Integer idIngrediente) {
-        PlatoMapper platoMapper = new PlatoMapperImpl();
         Plato plato = findPlatoById(idPlato);
         Ingrediente ingrediente = ingredienteService.findById(idIngrediente);
         System.out.println((plato == null) + " " + (ingrediente == null));

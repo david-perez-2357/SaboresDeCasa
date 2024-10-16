@@ -26,6 +26,9 @@ public class PlatoPedidoService {
      * @return PlatoPedido
      */
     public PlatoPedido findById(Integer idPlatoPedido) {
+        if (idPlatoPedido == null) {
+            return null;
+        }
         return platoPedidoRepository.findById(idPlatoPedido).orElse(null);
     }
 
