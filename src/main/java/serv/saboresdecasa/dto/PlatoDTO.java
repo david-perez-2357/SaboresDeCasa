@@ -11,21 +11,4 @@ import serv.saboresdecasa.model.Plato;
 public class PlatoDTO {
     Integer id;
     String nombre;
-
-    public PlatoDTO(Plato plato) {
-        if (plato == null) {
-            return;
-        }
-
-        this.id = plato.getId();
-        this.nombre = plato.getNombre();
-    }
-
-    public Plato convertToPlato() {
-        return new Plato(this.id, this.nombre, null, null);
-    }
-
-    public Plato convertToPlato(Plato plato) {
-        return new Plato(this.id, this.nombre, plato.getIngredientes(), plato.getTipoPlatos());
-    }
 }
