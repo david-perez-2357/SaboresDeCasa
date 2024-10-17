@@ -56,6 +56,6 @@ public class PedidoController {
 
     @GetMapping("/{id}/price")
     public Double getPrice(@PathVariable Integer id) {
-        return 0.0;
+        return pedidoService.getTotalPrice(id);
     }
 }

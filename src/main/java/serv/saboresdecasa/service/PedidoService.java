@@ -6,12 +6,10 @@ import serv.saboresdecasa.dto.PedidoDTO;
 import serv.saboresdecasa.dto.PlatoPedidoDTO;
 import serv.saboresdecasa.mapper.PedidoMapper;
 import serv.saboresdecasa.mapper.PlatoPedidoMapper;
-import serv.saboresdecasa.model.Bebida;
-import serv.saboresdecasa.model.BebidaPedido;
-import serv.saboresdecasa.model.Pedido;
-import serv.saboresdecasa.model.PlatoPedido;
+import serv.saboresdecasa.model.*;
 import serv.saboresdecasa.repository.PedidoRepository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,5 +118,32 @@ public class PedidoService {
 
         pedido.getPlatoPedidos().add(platoPedido);
         return platoPedidoMapper.toDTO(platoPedido);
+    }
+
+    /**
+     * Get the total price of an order
+     * @param idPedido Integer
+     * @return Double
+     */
+    public Double getTotalPrice(Integer idPedido) {
+        Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
+        if (pedido == null) {
+            return null;
+        }
+
+        List<PlatoPedido> platos = pedido.getPlatoPedidos().stream().toList();
+        List<BebidaPedido> bebidas = pedido.getBebidaPedidos().stream().toList();
+
+        BigDecimal totalPlatos = platos.stream().map(PlatoPedido::getPrecio).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        Promocion promocion = pedido.getPromocion();
+        Double total = totalPlatos.doubleValue();
+        if (promocion != null) {
+            Double descuento = promocion.getPorcentajeDescuento().doubleValue();
+            System.out.println("Descuento: " + descuento);
+            total = total - (total * descuento / 100);
+        }
+
+        return total;
     }
 }
