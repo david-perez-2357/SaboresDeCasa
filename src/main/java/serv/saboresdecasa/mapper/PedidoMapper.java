@@ -1,17 +1,15 @@
 package serv.saboresdecasa.mapper;
 
-import jakarta.persistence.Entity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import serv.saboresdecasa.dto.PedidoDTO;
 import serv.saboresdecasa.model.Cliente;
 import serv.saboresdecasa.model.Mesa;
 import serv.saboresdecasa.model.Pedido;
 import serv.saboresdecasa.model.Promocion;
-import serv.saboresdecasa.service.ClienteService;
+import serv.saboresdecasa.repository.ClienteRepository;
 import serv.saboresdecasa.service.MesaService;
 import serv.saboresdecasa.service.PromocionService;
 
@@ -20,7 +18,7 @@ import java.util.List;
 @Mapper
 public abstract class PedidoMapper {
     @Autowired
-    private ClienteService clienteService;
+    private ClienteRepository clienteRepository;
     @Autowired
     private PromocionService promocionService;
     @Autowired
@@ -43,7 +41,7 @@ public abstract class PedidoMapper {
 
     @Named("idCliente")
     public Cliente mapToCliente(Integer clienteId) {
-        return clienteService.findById(clienteId);
+        return clienteRepository.findById(clienteId).orElse(null);
     }
 
     @Named("idPromocion")

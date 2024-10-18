@@ -1,8 +1,9 @@
 package serv.saboresdecasa.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import serv.saboresdecasa.dto.ClienteDTO;
+import serv.saboresdecasa.mapper.ClienteMapper;
 import serv.saboresdecasa.model.Cliente;
 import serv.saboresdecasa.repository.ClienteRepository;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClienteService {
     private ClienteRepository clienteRepository;
+    private ClienteMapper clienteMapper;
 
     /**
      * Delete a client by id
@@ -26,8 +28,18 @@ public class ClienteService {
      * @param idCliente Integer
      * @return Cliente
      */
-    public Cliente findById(Integer idCliente) {
+    public Cliente findClienteById(Integer idCliente) {
         return clienteRepository.findById(idCliente).orElse(null);
+    }
+
+    /**
+     * Find a client by id
+     * @param idCliente Integer
+     * @return ClienteDTO
+     */
+    public ClienteDTO findById(Integer idCliente) {
+        Cliente cliente = findClienteById(idCliente);
+        return clienteMapper.toDTO(cliente);
     }
 
     /**
