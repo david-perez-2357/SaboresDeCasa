@@ -8,11 +8,13 @@ import serv.saboresdecasa.mapper.PlatoFormattedMapper;
 import serv.saboresdecasa.mapper.PlatoMapper;
 import serv.saboresdecasa.model.Ingrediente;
 import serv.saboresdecasa.model.Plato;
+import serv.saboresdecasa.model.TipoPlato;
 import serv.saboresdecasa.service.IngredienteService;
 import serv.saboresdecasa.service.PlatoService;
 import serv.saboresdecasa.service.TipoPlatoService;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
@@ -55,6 +57,14 @@ public class PlatoController {
         return platoService.save(finalPlato);
     }
 
+    @PutMapping("/{id}/tipo/{idTipo}")
+    public PlatoFormattedDTO updatePlatoPrice(@PathVariable Integer id, @PathVariable Integer idTipo, @RequestParam Double price) {
+        TipoPlato tipoPlato = tipoPlatoService.updateTipoPlatoPrice(id, idTipo, price);
+        PlatoFormattedDTO platoFormattedDTO = platoFormattedMapper.toDTO(tipoPlato);
+
+        return Objects.requireNonNullElseGet(platoFormattedDTO, PlatoFormattedDTO::new);
+    }
+
     @GetMapping("/{idPlato}/ingredient/")
     public List<Ingrediente> getIngredients(@PathVariable Integer idPlato) {
         return platoService.getIngredientes(idPlato);
@@ -62,7 +72,8 @@ public class PlatoController {
 
     @PostMapping("/{idPlato}/ingredient/{idIngrediente}")
     public PlatoDTO addIngredient(@PathVariable Integer idPlato, @PathVariable Integer idIngrediente) {
-        return platoService.addIngredient(idPlato, idIngrediente);
+        PlatoDTO platoDTO = platoService.addIngredient(idPlato, idIngrediente);
+        return Objects.requireNonNullElseGet(platoDTO, PlatoDTO::new);
     }
 
     @DeleteMapping("/{idPlato}/ingredient/{idIngrediente}")

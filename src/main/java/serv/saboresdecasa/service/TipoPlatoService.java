@@ -4,15 +4,19 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serv.saboresdecasa.enumerator.TiposPlato;
+import serv.saboresdecasa.model.Plato;
 import serv.saboresdecasa.model.TipoPlato;
+import serv.saboresdecasa.repository.PlatoRepository;
 import serv.saboresdecasa.repository.TipoPlatoRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class TipoPlatoService {
     private TipoPlatoRepository tipoPlatoRepository;
+    private PlatoRepository platoRepository;
 
     /**
      * Delete a dish type by id
@@ -55,5 +59,26 @@ public class TipoPlatoService {
      */
     public List<TipoPlato> getByTipo(Integer id) {
         return tipoPlatoRepository.findByTipo(TiposPlato.values()[id]);
+    }
+
+    /**
+     * Update the price of a dish type
+     * @param idPlato Integer
+     * @param idTipo Integer
+     * @param price Double
+     * @return TipoPlato
+     */
+    public TipoPlato updateTipoPlatoPrice(Integer idPlato, Integer idTipo, Double price) {
+        TiposPlato tipo = TiposPlato.values()[idTipo];
+        List<TipoPlato> tipoPlato = tipoPlatoRepository.findByTipo(tipo);
+        Plato plato = platoRepository.findById(idPlato).orElse(null);
+        TipoPlato tipoPlatoToUpdate = tipoPlato.stream().filter(tp -> tp.getPlato().equals(plato)).findFirst().orElse(null);
+
+        if (tipoPlatoToUpdate != null) {
+            tipoPlatoToUpdate.setPrecio(BigDecimal.valueOf(price));
+            return tipoPlatoRepository.save(tipoPlatoToUpdate);
+        }else {
+            return null;
+        }
     }
 }
