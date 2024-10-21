@@ -3,14 +3,13 @@ package serv.saboresdecasa.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import serv.saboresdecasa.dto.PedidoDTO;
-import serv.saboresdecasa.dto.PlatoDTO;
+import serv.saboresdecasa.dto.PedidoTotalPriceDTO;
 import serv.saboresdecasa.dto.PlatoPedidoDTO;
 import serv.saboresdecasa.model.Bebida;
-import serv.saboresdecasa.model.Plato;
-import serv.saboresdecasa.model.PlatoPedido;
 import serv.saboresdecasa.service.PedidoService;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
@@ -51,11 +50,15 @@ public class PedidoController {
     @PostMapping("/{id}/plato")
     public PlatoPedidoDTO addPlato(@PathVariable Integer id, @RequestBody PlatoPedidoDTO plato) {
         plato.setIdPedido(id);
-        return pedidoService.addPlato(id, plato);
+        PlatoPedidoDTO platoPedidoDTO = pedidoService.addPlato(id, plato);
+        return Objects.requireNonNullElseGet(platoPedidoDTO, PlatoPedidoDTO::new);
     }
 
     @GetMapping("/{id}/price")
-    public Double getPrice(@PathVariable Integer id) {
-        return pedidoService.getTotalPrice(id);
+    public PedidoTotalPriceDTO getPrice(@PathVariable Integer id) {
+        PedidoDTO pedidoDTO = pedidoService.findById(id);
+        PedidoTotalPriceDTO pedidoTotalPriceDTO = new PedidoTotalPriceDTO(pedidoDTO);
+        pedidoTotalPriceDTO.setTotalPrice(pedidoService.getTotalPrice(id));
+        return pedidoTotalPriceDTO;
     }
 }
