@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class PlatoFormattedDTO {
     Integer id;
+    Integer idPlato;
     String nombre;
     BigDecimal precio;
     String tipo;
