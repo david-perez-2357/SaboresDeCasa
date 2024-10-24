@@ -57,6 +57,11 @@ public class PedidoController {
     @GetMapping("/{id}/price")
     public PedidoTotalPriceDTO getPrice(@PathVariable Integer id) {
         PedidoDTO pedidoDTO = pedidoService.findById(id);
+
+        if (pedidoDTO == null) {
+            return new PedidoTotalPriceDTO();
+        }
+
         PedidoTotalPriceDTO pedidoTotalPriceDTO = new PedidoTotalPriceDTO(pedidoDTO);
         pedidoTotalPriceDTO.setTotalPrice(pedidoService.getTotalPrice(id));
         return pedidoTotalPriceDTO;
