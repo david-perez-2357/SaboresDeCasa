@@ -31,4 +31,8 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos = new LinkedHashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "id_usuario", unique = true)
+    private Usuario usuario;
 }
