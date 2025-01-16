@@ -54,9 +54,13 @@ public class PedidoService {
      * @return Pedido
      */
     public PedidoDTO save(PedidoDTO pedidoDTO) {
-        Pedido pedido = pedidoMapper.toModel(pedidoDTO);
+        if (pedidoDTO == null) {
+            throw new IllegalArgumentException("PedidoDTO is null");
+        }
 
+        Pedido pedido = pedidoMapper.toModel(pedidoDTO);
         Pedido pedidoSaved = pedidoRepository.save(pedido);
+
         return pedidoMapper.toDTO(pedidoSaved);
     }
 
@@ -66,7 +70,7 @@ public class PedidoService {
      */
     public List<PedidoDTO> getAll() {
         List<Pedido> pedidos = pedidoRepository.findAll();
-        return pedidos.stream().map(pedidoMapper::toDTO).toList();
+        return pedidoMapper.toDTOList(pedidos);
     }
 
     /**
@@ -126,9 +130,13 @@ public class PedidoService {
      * @return Double
      */
     public Double getTotalPrice(Integer idPedido) {
+        if (idPedido == null) {
+            throw new IllegalArgumentException("Invalid parameters");
+        }
+
         Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
         if (pedido == null) {
-            return null;
+            throw new NullPointerException("Pedido is null or does not exist");
         }
 
         List<PlatoPedido> platos = pedido.getPlatoPedidos().stream().toList();

@@ -38,7 +38,16 @@ public class ClienteService {
      * @return ClienteDTO
      */
     public ClienteDTO findById(Integer idCliente) {
+        if (idCliente == null) {
+            throw new IllegalArgumentException("client id is null");
+        }
+
         Cliente cliente = findClienteById(idCliente);
+
+        if (cliente == null) {
+            throw new NullPointerException("client not found");
+        }
+
         return clienteMapper.toDTO(cliente);
     }
 

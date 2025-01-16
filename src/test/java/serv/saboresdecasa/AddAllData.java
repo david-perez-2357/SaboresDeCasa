@@ -1,136 +1,130 @@
 package serv.saboresdecasa;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import serv.saboresdecasa.enumerator.TiposPlato;
 import serv.saboresdecasa.model.*;
-import serv.saboresdecasa.repository.BebidaRepository;
-import serv.saboresdecasa.service.*;
+import serv.saboresdecasa.repository.*;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @SpringBootTest
-class SaboresDeCasaApplicationTests {
+@AutoConfigureTestDatabase
+@DisplayName("\uD83D\uDCC1 Add All Data")
+class AddAllData {
     @Autowired
-    private BebidaService bebidaService;
+    private BebidaRepository bebidaRepository;
     @Autowired
-    private ClienteService clienteService;
+    private PlatoRepository platoRepository;
     @Autowired
-    private IngredienteService ingredienteService;
+    private PedidoRepository pedidoRepository;
     @Autowired
-    private MesaService mesaService;
+    private PlatoPedidoRepository platoPedidoRepository;
     @Autowired
-    private PedidoService pedidoService;
+    private ClienteRepository clienteRepository;
     @Autowired
-    private PlatoService platoService;
+    private MesaRepository mesaRepository;
     @Autowired
-    private PromocionService promocionService;
+    private PromocionRepository promocionRepository;
     @Autowired
-    private TipoPlatoService tipoPlatoService;
+    private IngredienteRepository ingredienteRepository;
     @Autowired
-    private BebidaPedidoService bebidaPedidoService;
+    private TipoPlatoRepository tipoPlatoRepository;
     @Autowired
-    private PlatoPedidoService platoPedidoService;
+    private BebidaPedidoRepository bebidaPedidoRepository;
 
     @Test
-    void contextLoads() {
-        System.out.println("Context loads...");
-        assert true;
-    }
+    @DisplayName("\uD83D\uDCCA Add data to all tables")
+    @BeforeEach
+    void addDataToAllTables() {
+        System.out.println("Adding data to all tables...");
+        Bebida bebida = new Bebida();
+        bebida.setNombre("Coca Cola");
+        bebida.setMlDeCapacidad(500);
+        bebidaRepository.save(bebida);
+        System.out.println("Added data to Bebida table");
 
-//    @Test
-//    void addDataToAllTables() {
-//        System.out.println("Adding data to all tables...");
-//        Bebida bebida = new Bebida();
-//        bebida.setId(4);
-//        bebida.setNombre("Coca Cola");
-//        bebida.setMlDeCapacidad(500);
-//        bebidaService.save(bebida);
-//        System.out.println("Added data to Bebida table");
-//
-//        Plato plato = new Plato();
-//        plato.setNombre("Pizza");
-//        platoService.save(plato);
-//        System.out.println("Added data to Plato table");
-//
-//        Ingrediente ingrediente = new Ingrediente();
-//        ingrediente.setNombre("Queso");
-//        ingredienteService.save(ingrediente);
-//        System.out.println("Added data to Ingrediente table");
-//
-//        Ingrediente ingrediente2 = new Ingrediente();
-//        ingrediente2.setNombre("Tomate");
-//        ingredienteService.save(ingrediente2);
-//        System.out.println("Added data to Ingrediente table");
-//
-//        TipoPlato tipoPlato = new TipoPlato();
-//        tipoPlato.setTipo(TiposPlato.PRINCIPAL);
-//        tipoPlato.setPrecio(BigDecimal.valueOf(10.0));
-//        tipoPlato.setPlato(plato);
-//        tipoPlatoService.save(tipoPlato);
-//        System.out.println("Added data to TipoPlato table");
-//
-//        plato.setIngredientes(Set.of(ingrediente, ingrediente2));
-//        platoService.save(plato);
-//        System.out.println("Added relations to Plato table");
-//
-//        Cliente cliente = new Cliente();
-//        cliente.setNombre("Juan");
-//        cliente.setApellidos("Perez");
-//        cliente.setTelefono("123456789");
-//        clienteService.save(cliente);
-//        System.out.println("Added data to Cliente table");
-//
-//        Mesa mesa = new Mesa();
-//        mesa.setId(Short.valueOf("1"));
-//        mesa.setCapacidad(Short.valueOf("4"));
-//        mesaService.save(mesa);
-//        System.out.println("Added data to Mesa table");
-//
-//        Promocion promocion = new Promocion();
-//        promocion.setTitulo("2x1");
-//        promocion.setPorcentajeDescuento(Short.valueOf("50"));
-//        promocion.setDescripcion("Lleva 2 platos y paga 1");
-//        promocionService.save(promocion);
-//        System.out.println("Added data to Promocion table");
-//
-//        Pedido pedido = new Pedido();
-//        pedido.setId(1);
-//        pedido.setCliente(cliente);
-//        pedido.setMesa(mesa);
-//        pedido.setPromocion(promocion);
-//        pedido.setFecha(Instant.now());
-//        pedidoService.save(pedido);
-//        System.out.println("Added data to Pedido table");
-//
-//        PlatoPedido platoPedido = new PlatoPedido();
-//        platoPedido.setPlato(plato);
-//        platoPedido.setPedido(pedido);
-//        platoPedido.setTipoPlato(tipoPlato);
-//        platoPedido.setCantidad(1);
-//        platoPedido.setServido(false);
-//        platoPedido.setPrecio(BigDecimal.valueOf(10.0));
-//        pedido.setPlatoPedidos(Set.of(platoPedido));
-//        pedidoService.save(pedido);
-//        platoPedidoService.save(platoPedido);
-//        System.out.println("Added data to PlatoPedido table");
-//
-//        BebidaPedido bebidaPedido = new BebidaPedido();
-//        bebidaPedido.setBebida(bebida);
-//        bebidaPedido.setPedido(pedido);
-//        bebidaPedido.setCantidad(2);
-//        bebidaPedido.setServido(false);
-//        bebidaPedido.setPrecio(BigDecimal.valueOf(5.0));
-//        pedido.setBebidaPedidos(Set.of(bebidaPedido));
-//        pedidoService.save(pedido);
-//        bebidaPedidoService.save(bebidaPedido);
-//        System.out.println("Added data to BebidaPedido table");
-//    }
+        Plato plato = new Plato();
+        plato.setNombre("Pizza");
+        platoRepository.save(plato);
+        System.out.println("Added data to Plato table");
+
+        Ingrediente ingrediente = new Ingrediente();
+        ingrediente.setNombre("Queso");
+        ingredienteRepository.save(ingrediente);
+        System.out.println("Added data to Ingrediente table");
+
+        Ingrediente ingrediente2 = new Ingrediente();
+        ingrediente2.setNombre("Tomate");
+        ingredienteRepository.save(ingrediente2);
+        System.out.println("Added data to Ingrediente table");
+
+        TipoPlato tipoPlato = new TipoPlato();
+        tipoPlato.setTipo(TiposPlato.PRINCIPAL);
+        tipoPlato.setPrecio(BigDecimal.valueOf(10.0));
+        tipoPlato.setPlato(plato);
+        tipoPlatoRepository.save(tipoPlato);
+        System.out.println("Added data to TipoPlato table");
+
+        plato.setIngredientes(Set.of(ingrediente, ingrediente2));
+        platoRepository.save(plato);
+        System.out.println("Added relations to Plato table");
+
+        Cliente cliente = new Cliente();
+        cliente.setNombre("Juan");
+        cliente.setApellidos("Perez");
+        cliente.setTelefono("123456789");
+        clienteRepository.save(cliente);
+        System.out.println("Added data to Cliente table");
+
+        Mesa mesa = new Mesa();
+        mesa.setId(Short.valueOf("1"));
+        mesa.setCapacidad(Short.valueOf("4"));
+        mesaRepository.save(mesa);
+        System.out.println("Added data to Mesa table");
+
+        Promocion promocion = new Promocion();
+        promocion.setTitulo("2x1");
+        promocion.setPorcentajeDescuento(Short.valueOf("50"));
+        promocion.setDescripcion("Lleva 2 platos y paga 1");
+        promocionRepository.save(promocion);
+        System.out.println("Added data to Promocion table");
+
+        Pedido pedido = new Pedido();
+        pedido.setCliente(cliente);
+        pedido.setMesa(mesa);
+        pedido.setPromocion(promocion);
+        pedido.setFecha(LocalDate.now().atStartOfDay());
+        pedidoRepository.save(pedido);
+        System.out.println("Added data to Pedido table");
+
+        PlatoPedido platoPedido = new PlatoPedido();
+        platoPedido.setPedido(pedido);
+        platoPedido.setTipoPlato(tipoPlato);
+        platoPedido.setCantidad(1);
+        platoPedido.setServido(false);
+        platoPedido.setPrecio(BigDecimal.valueOf(10.0));
+        pedido.setPlatoPedidos(Set.of(platoPedido));
+        pedidoRepository.save(pedido);
+        platoPedidoRepository.save(platoPedido);
+        System.out.println("Added data to PlatoPedido table");
+
+        BebidaPedido bebidaPedido = new BebidaPedido();
+        bebidaPedido.setBebida(bebida);
+        bebidaPedido.setPedido(pedido);
+        bebidaPedido.setCantidad(2);
+        bebidaPedido.setServido(false);
+        bebidaPedido.setPrecio(BigDecimal.valueOf(5.0));
+        pedido.setBebidaPedidos(Set.of(bebidaPedido));
+        bebidaPedidoRepository.save(bebidaPedido);
+        System.out.println("Added data to BebidaPedido table");
+    }
 
 //    @Test
 //    void deleteDataFromAllTables() {

@@ -58,6 +58,9 @@ public class TipoPlatoService {
      * @return List<TipoPlato>
      */
     public List<TipoPlato> getByTipo(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Invalid parameters");
+        }
         return tipoPlatoRepository.findByTipo(TiposPlato.values()[id]);
     }
 
@@ -69,6 +72,14 @@ public class TipoPlatoService {
      * @return TipoPlato
      */
     public TipoPlato updateTipoPlatoPrice(Integer idPlato, Integer idTipo, Double price) {
+        if (idPlato == null || idTipo == null || price == null) {
+            throw new IllegalArgumentException("Invalid parameters");
+        }
+
+        if (idTipo < 0 || idTipo >= TiposPlato.values().length) {
+            throw new NullPointerException("Invalid type");
+        }
+
         TiposPlato tipo = TiposPlato.values()[idTipo];
         List<TipoPlato> tipoPlato = tipoPlatoRepository.findByTipo(tipo);
         Plato plato = platoRepository.findById(idPlato).orElse(null);
@@ -78,7 +89,7 @@ public class TipoPlatoService {
             tipoPlatoToUpdate.setPrecio(BigDecimal.valueOf(price));
             return tipoPlatoRepository.save(tipoPlatoToUpdate);
         }else {
-            return null;
+            throw new NullPointerException("Product or format not exist");
         }
     }
 }
